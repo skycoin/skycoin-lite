@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math"
 	"sort"
+	"log"
 
 	"github.com/skycoin/skycoin-lite/cipher"
 	"github.com/skycoin/skycoin-lite/cipher/encoder"
@@ -135,10 +136,10 @@ func (txn *Transaction) Verify() error {
 func (txn Transaction) VerifyInput(uxIn UxArray) error {
 	if DebugLevel2 {
 		if len(txn.In) != len(txn.Sigs) || len(txn.In) != len(uxIn) {
-			//logger.Panic("tx.In != tx.Sigs != uxIn")
+			log.Panic("tx.In != tx.Sigs != uxIn")
 		}
 		if txn.InnerHash != txn.HashInner() {
-			//logger.Panic("Invalid Tx Header Hash")
+			log.Panic("Invalid Tx Header Hash")
 		}
 	}
 
@@ -154,11 +155,11 @@ func (txn Transaction) VerifyInput(uxIn UxArray) error {
 		// Check that hashes match.
 		// This would imply a bug with UnspentPool.GetMultiple
 		if len(txn.In) != len(uxIn) {
-			//logger.Panic("tx.In does not match uxIn")
+			log.Panic("tx.In does not match uxIn")
 		}
 		for i := range txn.In {
 			if txn.In[i] != uxIn[i].Hash() {
-				//logger.Panic("impossible error: Ux hash mismatch")
+				log.Panic("impossible error: Ux hash mismatch")
 			}
 		}
 	}
@@ -169,7 +170,7 @@ func (txn Transaction) VerifyInput(uxIn UxArray) error {
 // Returns the signature index for later signing
 func (txn *Transaction) PushInput(uxOut cipher.SHA256) uint16 {
 	if len(txn.In) >= math.MaxUint16 {
-		//logger.Panic("Max transaction inputs reached")
+		log.Panic("Max transaction inputs reached")
 	}
 	txn.In = append(txn.In, uxOut)
 	return uint16(len(txn.In) - 1)
@@ -200,16 +201,16 @@ func (txn *Transaction) SignInputs(keys []cipher.SecKey) {
 	txn.InnerHash = txn.HashInner() //update hash
 
 	if len(txn.Sigs) != 0 {
-		//logger.Panic("Transaction has been signed")
+		log.Panic("Transaction has been signed")
 	}
 	if len(keys) != len(txn.In) {
-		//logger.Panic("Invalid number of keys")
+		log.Panic("Invalid number of keys")
 	}
 	if len(keys) > math.MaxUint16 {
-		//logger.Panic("Too many key")
+		log.Panic("Too many key")
 	}
 	if len(keys) == 0 {
-		//logger.Panic("No keys")
+		log.Panic("No keys")
 	}
 	sigs := make([]cipher.Sig, len(txn.In))
 	innerHash := txn.HashInner()
@@ -274,7 +275,7 @@ func (txn *Transaction) Serialize() []byte {
 func MustTransactionDeserialize(b []byte) Transaction {
 	t, err := TransactionDeserialize(b)
 	if err != nil {
-		//logger.Panicf("Failed to deserialize transaction: %v", err)
+		log.Panicf("Failed to deserialize transaction: %v", err)
 	}
 	return t
 }
