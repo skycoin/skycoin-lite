@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/skycoin/skycoin-lite.svg?branch=master)](https://travis-ci.com/skycoin/skycoin-lite)
+
 # Skycoin Liteclient
 
 This repository contains a liteclient for Skycoin written in Go. At the moment it is only used to compile an [Android Archive](https://developer.android.com/studio/projects/android-library.html) and a JS library with [gopherjs](https://github.com/gopherjs/gopherjs).
