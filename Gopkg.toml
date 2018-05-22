@@ -28,7 +28,7 @@ required = ["github.com/gopherjs/gopherjs"]
 
 [[constraint]]
   branch = "master"
-  name = "github.com/tang0th/go-chacha20"
+  name = "github.com/skycoin/skycoin"
 
 [prune]
   go-tests = true

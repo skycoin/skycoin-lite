@@ -1,12 +1,13 @@
 package mobile
 
 import (
-	"github.com/skycoin/skycoin-lite/liteclient"
 	"encoding/json"
+
+	"github.com/skycoin/skycoin-lite/liteclient"
 )
 
 // Returns a series of addresses based on a seed and the number of addresses
-func GetAddresses(seed string, amount int) (string) {
+func GetAddresses(seed string, amount int) string {
 	addresses, _ := liteclient.Addresses(seed, amount)
 	response, _ := json.Marshal(addresses)
 	return string(response)

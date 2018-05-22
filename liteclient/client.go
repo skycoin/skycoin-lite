@@ -1,32 +1,33 @@
 package liteclient
 
 import (
-	"github.com/skycoin/skycoin-lite/cipher"
 	"encoding/hex"
-	"github.com/skycoin/skycoin-lite/coin"
 	"encoding/json"
+
+	"github.com/skycoin/skycoin/src/cipher"
+	"github.com/skycoin/skycoin/src/coin"
 )
 
 type Address struct {
 	NextSeed string
-	Secret string
-	Public string
-	Address string
+	Secret   string
+	Public   string
+	Address  string
 }
 
 type TransactionInput struct {
-	Hash		string
-	Secret		string
+	Hash   string
+	Secret string
 }
 
 type TransactionOutput struct {
-	Address		string
-	Coins		uint64
-	Hours		uint64
+	Address string
+	Coins   uint64
+	Hours   uint64
 }
 
 // Receives a hex encrypted string
-func GenerateAddress(seed string) (Address) {
+func GenerateAddress(seed string) Address {
 	decodedString, _ := hex.DecodeString(seed)
 	next, keys := cipher.GenerateDeterministicKeyPairsSeed([]byte(decodedString), 1)
 	pub := cipher.PubKeyFromSecKey(keys[0])
@@ -41,12 +42,12 @@ func GenerateAddress(seed string) (Address) {
 }
 
 // Receives inputs and outputs and returns a signed transaction
-func PrepareTransaction(inputsBody string, outputsBody string) (string) {
+func PrepareTransaction(inputsBody string, outputsBody string) string {
 	var inputs []TransactionInput
 	var outputs []TransactionOutput
 
-	json.Unmarshal([]byte(inputsBody),&inputs)
-	json.Unmarshal([]byte(outputsBody),&outputs)
+	json.Unmarshal([]byte(inputsBody), &inputs)
+	json.Unmarshal([]byte(outputsBody), &outputs)
 
 	newTransaction := coin.Transaction{}
 
@@ -69,8 +70,9 @@ func PrepareTransaction(inputsBody string, outputsBody string) (string) {
 	return hex.EncodeToString(d)
 }
 
-
+// Currently not in use
 func Addresses(seed string, amount int) ([]Address, error) {
+	//For this to return the same addresses as the wallet, this must use "[]byte(hex.DecodeString(seed))" instead of "[]byte(seed)".
 	_, secretKeys := cipher.GenerateDeterministicKeyPairsSeed([]byte(seed), amount)
 	addresses := make([]Address, amount)
 	for i, sec := range secretKeys {
@@ -86,5 +88,3 @@ func Addresses(seed string, amount int) ([]Address, error) {
 
 	return addresses, nil
 }
-
-

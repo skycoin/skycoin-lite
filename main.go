@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 )
 
+// For testing purposes. This file is not part of the library.
 func main() {
 	seed := hex.EncodeToString([]byte("nest*"))
 	fmt.Println(liteclient.Addresses(seed, 3))

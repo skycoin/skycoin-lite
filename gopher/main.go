@@ -7,7 +7,7 @@ import (
 
 func main() {
 	js.Global.Set("Cipher", map[string]interface{}{
-		"GenerateAddresses": liteclient.GenerateAddress,
+		"GenerateAddresses":  liteclient.GenerateAddress,
 		"PrepareTransaction": liteclient.PrepareTransaction,
 	})
 }
