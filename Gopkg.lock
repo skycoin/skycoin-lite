@@ -42,24 +42,6 @@
   version = "v1.0.0"
 
 [[projects]]
-  name = "github.com/mattn/go-colorable"
-  packages = ["."]
-  revision = "167de6bfdfba052fa6b2d3664c8f5272e23c9072"
-  version = "v0.0.9"
-
-[[projects]]
-  name = "github.com/mattn/go-isatty"
-  packages = ["."]
-  revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
-  version = "v0.0.3"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/mgutz/ansi"
-  packages = ["."]
-  revision = "9520e82c474b0a04dd04f8a40959027271bab992"
-
-[[projects]]
   branch = "master"
   name = "github.com/neelance/astrewrite"
   packages = ["."]
@@ -81,12 +63,6 @@
   revision = "809beceb23714880abc4a382a00c05f89d13b1cc"
 
 [[projects]]
-  name = "github.com/sirupsen/logrus"
-  packages = ["."]
-  revision = "c155da19408a8799da419ed3eeb0cb5db0ad5dbc"
-  version = "v1.0.5"
-
-[[projects]]
   name = "github.com/skycoin/skycoin"
   packages = [
     "src/cipher",
@@ -95,8 +71,7 @@
     "src/cipher/ripemd160",
     "src/cipher/secp256k1-go",
     "src/cipher/secp256k1-go/secp256k1-go2",
-    "src/coin",
-    "src/util/logging"
+    "src/coin"
   ]
   revision = "452491da01d7ce66c4ed6c01e19f986e1dda34ea"
   version = "v0.23.0"
@@ -142,6 +117,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0e1555b109418ef51cbfb655b8f0ab283207ab4ff3645434dc79a9ed9690b3a3"
+  inputs-digest = "a7b23861217458afa51a29d0f44c8cc3d256c9a73ee8be68691fea51fa880dd8"
   solver-name = "gps-cdcl"
   solver-version = 1

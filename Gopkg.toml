@@ -25,6 +25,7 @@
 #   unused-packages = true
 
 required = ["github.com/gopherjs/gopherjs"]
+ignored = ["github.com/skycoin/skycoin/src/util/logging"]
 
 [[constraint]]
   branch = "master"
