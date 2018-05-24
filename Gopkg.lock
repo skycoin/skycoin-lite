@@ -63,6 +63,20 @@
   revision = "809beceb23714880abc4a382a00c05f89d13b1cc"
 
 [[projects]]
+  name = "github.com/skycoin/skycoin"
+  packages = [
+    "src/cipher",
+    "src/cipher/base58",
+    "src/cipher/encoder",
+    "src/cipher/ripemd160",
+    "src/cipher/secp256k1-go",
+    "src/cipher/secp256k1-go/secp256k1-go2",
+    "src/coin"
+  ]
+  revision = "452491da01d7ce66c4ed6c01e19f986e1dda34ea"
+  version = "v0.23.0"
+
+[[projects]]
   name = "github.com/spf13/cobra"
   packages = ["."]
   revision = "ef82de70bb3f60c65fb8eebacbb2d122ef517385"
@@ -73,12 +87,6 @@
   packages = ["."]
   revision = "583c0c0531f06d5278b7d917446061adc344b5cd"
   version = "v1.0.1"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/tang0th/go-chacha20"
-  packages = ["chacha"]
-  revision = "3d46990f349dd41d624446d57ed5e46e7b1da024"
 
 [[projects]]
   branch = "master"
@@ -109,6 +117,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "3cf7407e546e7e4f41b3e78c5b423bea7937004e6df0268deb2c4d6d3b1e40b1"
+  inputs-digest = "a7b23861217458afa51a29d0f44c8cc3d256c9a73ee8be68691fea51fa880dd8"
   solver-name = "gps-cdcl"
   solver-version = 1

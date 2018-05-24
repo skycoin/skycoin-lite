@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: build-js build-js-min test lint check install-linters format help
+.PHONY: build-js build-js-min test lint check install-linters format fix-skycoin-dep help
 
 build-js: ## Build /gopher/main.go. The result is saved in /gopher
 	go build vendor/github.com/gopherjs/gopherjs/tool.go
@@ -43,11 +43,12 @@ install-linters: ## Install linters
 	gometalinter --vendored-linters --install
 
 format: ## Formats the code. Must have goimports installed (use make install-linters).
-	goimports ./cipher
-	goimports ./coin
-	goimports ./gopher
-	goimports ./liteclient
-	goimports ./mobile
+	goimports -w ./gopher
+	goimports -w ./liteclient
+	goimports -w ./mobile
+
+fix-skycoin-dependency: ## Modify the Skycoin code inside vendor, so that gopherjs can transpile correctly (see readme.md for more info).
+	fix-skycoin-dependency.sh
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
