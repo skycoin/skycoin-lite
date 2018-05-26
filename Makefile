@@ -4,11 +4,11 @@
 
 build-js: ## Build /gopher/main.go. The result is saved in /gopher
 	go build vendor/github.com/gopherjs/gopherjs/tool.go
-	GOOS=linux tool build gopher/main.go
+	GOOS=linux ./tool build gopher/main.go
 
 build-js-min: ## Build /gopher/main.go. The result is minified ad saved in /gopher
 	go build vendor/github.com/gopherjs/gopherjs/tool.go
-	GOOS=linux tool build gopher/main.go -m
+	GOOS=linux ./tool build gopher/main.go -m
 
 test:
 	go test ./... -timeout=10m -cover
