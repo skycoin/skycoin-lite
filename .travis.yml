@@ -1,3 +1,5 @@
+sudo: required
+dist: trusty
 language: go
 
 go:
@@ -6,10 +8,18 @@ go:
 install:
   - go get -t ./...
   - make install-linters
+  - npm install --global source-map-support
+  - cd $GOPATH/src/github.com/gopherjs/gopherjs/node-syscall/
+  - npm install --global node-gyp
+  - node-gyp rebuild
+  - mkdir -p $HOME/.node_libraries/
+  - cp build/Release/syscall.node $HOME/.node_libraries/syscall.node
+  - cd -
 
 script:
   - make check
   - make build-js-min
+  - make test-js
 
 notifications:
   # https://github.com/kvld/travisci-telegram TravisCI Telegram Bot integration
