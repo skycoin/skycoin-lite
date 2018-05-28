@@ -28,6 +28,25 @@ After compiling, the main.js and main.js.map files will be created/updated in th
 The javascript library is created starting from [gopher/main.go](gopher/main.go). The Android library is
 created starting from [mobile/api.go](mobile/api.go).
 
+### Running tests
+
+gopherjs tests can be run with
+
+```sh
+make test-js
+```
+
+The tests require node syscall support installed, see install instructions at
+https://github.com/gopherjs/gopherjs/blob/master/doc/syscalls.md#nodejs-on-linux-and-macos
+
+To enable stacktraces, install source maps:
+
+```sh
+npm install --global source-map-support
+```
+
+and make sure `NODE_PATH` is set to the value of `npm root --global` in your environment.
+
 ### Updating the skycoin code
 
 To mantain compatibility, avoid errors and facilitate the update process, the

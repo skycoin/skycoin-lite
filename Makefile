@@ -1,14 +1,19 @@
 .DEFAULT_GOAL := help
 
 .PHONY: build-js build-js-min test lint check install-linters format fix-skycoin-dep help
+.PHONY: test-js
 
-build-js: ## Build /gopher/main.go. The result is saved in /gopher
+build-js: ## Build /skycoinjs/skycoinjs.go. The result is saved in the repo root
 	go build -o gopherjs-tool vendor/github.com/gopherjs/gopherjs/tool.go
-	GOOS=linux ./gopherjs-tool build gopher/main.go
+	GOOS=linux ./gopherjs-tool build skycoinjs/skycoinjs.go
 
-build-js-min: ## Build /gopher/main.go. The result is minified ad saved in /gopher
-	go build -o gopherjs-tool  vendor/github.com/gopherjs/gopherjs/tool.go
-	GOOS=linux ./gopherjs-tool build gopher/main.go -m
+build-js-min: ## Build /skycoinjs/skycoinjs.go. The result is minified and saved in the repo root
+	go build -o gopherjs-tool vendor/github.com/gopherjs/gopherjs/tool.go
+	GOOS=linux ./gopherjs-tool build skycoinjs/skycoinjs.go -m
+
+test-js:
+	go build -o gopherjs-tool vendor/github.com/gopherjs/gopherjs/tool.go
+	./gopherjs-tool test ./skycoinjs/
 
 test:
 	go test ./... -timeout=10m -cover

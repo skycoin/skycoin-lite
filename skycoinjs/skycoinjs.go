@@ -1,4 +1,4 @@
-package main
+package skycoinjs
 
 import (
 	"github.com/gopherjs/gopherjs/js"
