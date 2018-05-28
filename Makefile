@@ -3,12 +3,12 @@
 .PHONY: build-js build-js-min test lint check install-linters format fix-skycoin-dep help
 
 build-js: ## Build /gopher/main.go. The result is saved in /gopher
-	go build vendor/github.com/gopherjs/gopherjs/tool.go
-	GOOS=linux ./tool build gopher/main.go
+	go build -o gopherjs-tool vendor/github.com/gopherjs/gopherjs/tool.go
+	GOOS=linux ./gopherjs-tool build gopher/main.go
 
 build-js-min: ## Build /gopher/main.go. The result is minified ad saved in /gopher
-	go build vendor/github.com/gopherjs/gopherjs/tool.go
-	GOOS=linux ./tool build gopher/main.go -m
+	go build -o gopherjs-tool  vendor/github.com/gopherjs/gopherjs/tool.go
+	GOOS=linux ./gopherjs-tool build gopher/main.go -m
 
 test:
 	go test ./... -timeout=10m -cover
