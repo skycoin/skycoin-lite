@@ -9,6 +9,7 @@ install:
   - go get -t ./...
   - make install-linters
   - npm install --global source-map-support
+  - go get github.com/gopherjs/gopherjs
   - cd $GOPATH/src/github.com/gopherjs/gopherjs/node-syscall/
   - npm install --global node-gyp
   - node-gyp rebuild

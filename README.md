@@ -39,6 +39,9 @@ make test-js
 The tests require node syscall support installed, see install instructions at
 https://github.com/gopherjs/gopherjs/blob/master/doc/syscalls.md#nodejs-on-linux-and-macos
 
+Note that you can't use the vendored gopherjs for this, because the gopherjs/node-syscall package
+can't be vendored by dep. You'll have to install gopherjs to your `GOPATH` with `go get`.
+
 To enable stacktraces, install source maps:
 
 ```sh
