@@ -3,17 +3,17 @@
 .PHONY: build-js build-js-min test lint check install-linters format fix-skycoin-dep help
 .PHONY: test-js
 
-build-js: ## Build /skycoinjs/skycoinjs.go. The result is saved in the repo root
+build-js: ## Build /skycoin/skycoin.go. The result is saved in the repo root
 	go build -o gopherjs-tool vendor/github.com/gopherjs/gopherjs/tool.go
-	GOOS=linux ./gopherjs-tool build skycoinjs/skycoinjs.go
+	GOOS=linux ./gopherjs-tool build skycoin/skycoin.go
 
-build-js-min: ## Build /skycoinjs/skycoinjs.go. The result is minified and saved in the repo root
+build-js-min: ## Build /skycoin/skycoin.go. The result is minified and saved in the repo root
 	go build -o gopherjs-tool vendor/github.com/gopherjs/gopherjs/tool.go
-	GOOS=linux ./gopherjs-tool build skycoinjs/skycoinjs.go -m
+	GOOS=linux ./gopherjs-tool build skycoin/skycoin.go -m
 
 test-js:
 	go build -o gopherjs-tool vendor/github.com/gopherjs/gopherjs/tool.go
-	./gopherjs-tool test ./skycoinjs/
+	./gopherjs-tool test ./skycoin/
 
 test:
 	go test ./... -timeout=10m -cover
