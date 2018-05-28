@@ -11,12 +11,12 @@ import (
 func GetAddresses(seed string, amount int) (string, error) {
 	addresses, err := liteclient.GenerateAddresses(seed, amount)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
 	response, err := json.Marshal(addresses)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
 	return string(response), nil
