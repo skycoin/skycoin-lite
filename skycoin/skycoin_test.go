@@ -1,4 +1,4 @@
-package skycoinjs
+package main
 
 import (
 	"encoding/hex"

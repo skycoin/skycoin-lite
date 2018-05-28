@@ -13,7 +13,7 @@ build-js-min: ## Build /skycoin/skycoin.go. The result is minified and saved in 
 
 test-js:
 	go build -o gopherjs-tool vendor/github.com/gopherjs/gopherjs/tool.go
-	./gopherjs-tool test ./skycoin/
+	./gopherjs-tool test ./skycoin/ -v
 
 test:
 	go test ./... -timeout=10m -cover
