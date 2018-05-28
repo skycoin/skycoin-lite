@@ -20,7 +20,7 @@ install:
 script:
   - make check
   - make build-js-min
-  - make test-js
+  - NODE_PATH=$(npm root --global) make test-js
 
 notifications:
   # https://github.com/kvld/travisci-telegram TravisCI Telegram Bot integration
