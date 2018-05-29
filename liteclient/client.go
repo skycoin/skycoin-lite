@@ -32,24 +32,24 @@ type TransactionOutput struct {
 }
 
 // GenerateAddress generates an address from a seed. The seed should be hex-encoded bytes.
-func GenerateAddress(seed string) (Address, error) {
+func GenerateAddress(seed string) (Address, string) {
 	addrs, err := GenerateAddresses(seed, 1)
-	if err != nil {
+	if err != "" {
 		return Address{}, err
 	}
 
-	return addrs[0], nil
+	return addrs[0], ""
 }
 
 // GenerateAddresses generates addresses from a seed. The seed should be hex-encoded bytes.
-func GenerateAddresses(seed string, num int) ([]Address, error) {
+func GenerateAddresses(seed string, num int) ([]Address, string) {
 	addresses := make([]Address, num)
 
 	nextSeed := seed
 	for i := 0; i < num; i++ {
 		decodedSeed, err := hex.DecodeString(nextSeed)
 		if err != nil {
-			return nil, err
+			return nil, err.Error()
 		}
 
 		next, keys := cipher.GenerateDeterministicKeyPairsSeed([]byte(decodedSeed), 1)
@@ -65,21 +65,21 @@ func GenerateAddresses(seed string, num int) ([]Address, error) {
 		addresses[i] = address
 	}
 
-	return addresses, nil
+	return addresses, ""
 }
 
 // PrepareTransaction receives inputs and outputs and returns a signed transaction
 // inputsBody and outputsBody are JSONified arrays of TransactionInput and TransactionOutput, respectively.
-func PrepareTransaction(inputsBody string, outputsBody string) (string, error) {
+func PrepareTransaction(inputsBody string, outputsBody string) (string, string) {
 	var inputs []TransactionInput
 	var outputs []TransactionOutput
 
 	if err := json.Unmarshal([]byte(inputsBody), &inputs); err != nil {
-		return "", err
+		return "", err.Error()
 	}
 
 	if err := json.Unmarshal([]byte(outputsBody), &outputs); err != nil {
-		return "", err
+		return "", err.Error()
 	}
 
 	newTransaction := coin.Transaction{}
@@ -89,12 +89,12 @@ func PrepareTransaction(inputsBody string, outputsBody string) (string, error) {
 	for i, in := range inputs {
 		k, err := cipher.SecKeyFromHex(in.Secret)
 		if err != nil {
-			return "", err
+			return "", err.Error()
 		}
 
 		inputHash, err := cipher.SHA256FromHex(in.Hash)
 		if err != nil {
-			return "", err
+			return "", err.Error()
 		}
 
 		keys[i] = k
@@ -104,11 +104,11 @@ func PrepareTransaction(inputsBody string, outputsBody string) (string, error) {
 	for _, out := range outputs {
 		addr, err := cipher.DecodeBase58Address(out.Address)
 		if err != nil {
-			return "", err
+			return "", err.Error()
 		}
 
 		if addr.Null() {
-			return "", errors.New("output address is the null address")
+			return "", errors.New("output address is the null address").Error()
 		}
 
 		newTransaction.PushOutput(addr, out.Coins, out.Hours)
@@ -118,10 +118,10 @@ func PrepareTransaction(inputsBody string, outputsBody string) (string, error) {
 	newTransaction.UpdateHeader()
 
 	if err := newTransaction.Verify(); err != nil {
-		return "", err
+		return "", err.Error()
 	}
 
 	d := newTransaction.Serialize()
 
-	return hex.EncodeToString(d), nil
+	return hex.EncodeToString(d), ""
 }
