@@ -11,34 +11,18 @@ import (
 func main() {
 	seed := hex.EncodeToString([]byte("nest*"))
 
-	addrs, err := liteclient.GenerateAddresses(seed, 3)
-	if err != nil {
-		fmt.Println("ERROR:", err)
-	} else {
-		fmt.Println(addrs)
-	}
+	addrs := liteclient.GenerateAddresses(seed, 3)
+	fmt.Println(addrs)
 
-	address1, err := liteclient.GenerateAddress(seed)
+	address1 := liteclient.GenerateAddress(seed)
 	fmt.Println("----")
-	if err != nil {
-		fmt.Println("ERROR:", err)
-	} else {
-		fmt.Println(address1)
-	}
+	fmt.Println(address1)
 
-	address2, err := liteclient.GenerateAddress(address1.NextSeed)
+	address2 := liteclient.GenerateAddress(address1.NextSeed)
 	fmt.Println("----")
-	if err != nil {
-		fmt.Println("ERROR:", err)
-	} else {
-		fmt.Println(address2)
-	}
+	fmt.Println(address2)
 
-	address3, err := liteclient.GenerateAddress(address2.NextSeed)
+	address3 := liteclient.GenerateAddress(address2.NextSeed)
 	fmt.Println("----")
-	if err != nil {
-		fmt.Println("ERROR:", err)
-	} else {
-		fmt.Println(address3)
-	}
+	fmt.Println(address3)
 }
