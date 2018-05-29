@@ -11,10 +11,7 @@ func TestGenerateAddress(t *testing.T) {
 	stringSeed := "abcdefg"
 	seed := hex.EncodeToString([]byte(stringSeed))
 
-	addr, err := liteclient.GenerateAddress(seed)
-	if err != nil {
-		t.Fatalf(err.Error())
-	}
+	addr := liteclient.GenerateAddress(seed)
 
 	if addr.Address != "gyJNKKj95bCn6o5mUCQgz8SCem7av2W3CG" {
 		t.Fatalf("GenerateAddress address is invalid")
@@ -24,10 +21,7 @@ func TestGenerateAddress(t *testing.T) {
 		t.Fatalf("GenerateAddress pubkey is invalid")
 	}
 
-	nextAddr, err := liteclient.GenerateAddress(addr.NextSeed)
-	if err != nil {
-		t.Fatalf(err.Error())
-	}
+	nextAddr := liteclient.GenerateAddress(addr.NextSeed)
 
 	if nextAddr.Address != "2YzQDZFpS64u5ydnE9iKK9WJPXU2EbmSzmW" {
 		t.Fatalf("GenerateAddress address is invalid 2")
