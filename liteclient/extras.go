@@ -74,7 +74,7 @@ func AddressFromSecKey(seckey string) string {
 func PubKeyFromSig(sig string, hash string) string {
 	s := cipher.MustSigFromHex(sig)
 	h := cipher.MustSHA256FromHex(hash)
-	
+
 	pubKey, err := cipher.PubKeyFromSig(s, h)
 	if err != nil {
 		panic(err)

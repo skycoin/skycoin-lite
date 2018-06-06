@@ -73,5 +73,5 @@ func TestGenerateAddress(t *testing.T) {
 	if signHash == "" {
 		t.Fatalf("created signature is null")
 	}
-	
+
 }
