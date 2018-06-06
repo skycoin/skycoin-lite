@@ -48,7 +48,7 @@ install-linters: ## Install linters
 	gometalinter --vendored-linters --install
 
 format: ## Formats the code. Must have goimports installed (use make install-linters).
-	goimports -w ./gopher
+	goimports -w ./skycoin
 	goimports -w ./liteclient
 	goimports -w ./mobile
 
