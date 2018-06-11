@@ -50,14 +50,6 @@ npm install --global source-map-support
 
 and make sure `NODE_PATH` is set to the value of `npm root --global` in your environment.
 
-### Updating the skycoin code
-
-To mantain compatibility, avoid errors and facilitate the update process, the
-[Skycoin](https://github.com/skycoin/skycoin) code is added as vendored dependency through `dep`. However,
-if the Skycoin code is updated using dep, `make build-js` and `make build-js-min` will stop working,
-because Skycoin uses dependencies that are not compatible with gopherjs. To solve this problem, it is
-necessary to execute `make fix-skycoin-dependency` after updating the dependencies with dep.
-
 ### Formatting
 
 All `.go` source files should be formatted `goimports`.  You can do this with:
