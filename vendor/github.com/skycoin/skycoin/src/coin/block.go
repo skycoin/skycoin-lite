@@ -8,8 +8,6 @@ import (
 	"github.com/skycoin/skycoin/src/cipher/encoder"
 )
 
-//var //logger = logging.MustGetLogger("coin")
-
 // Block represents the block struct
 type Block struct {
 	Head BlockHeader
