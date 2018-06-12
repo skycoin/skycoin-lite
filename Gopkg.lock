@@ -63,6 +63,7 @@
   revision = "809beceb23714880abc4a382a00c05f89d13b1cc"
 
 [[projects]]
+  branch = "develop"
   name = "github.com/skycoin/skycoin"
   packages = [
     "src/cipher",
@@ -73,8 +74,7 @@
     "src/cipher/secp256k1-go/secp256k1-go2",
     "src/coin"
   ]
-  revision = "452491da01d7ce66c4ed6c01e19f986e1dda34ea"
-  version = "v0.23.0"
+  revision = "1ecda0bc8ae3df8dc522965082c80477f9edd489"
 
 [[projects]]
   name = "github.com/spf13/cobra"
@@ -92,7 +92,7 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
-  revision = "1a580b3eff7814fc9b40602fd35256c63b50f491"
+  revision = "8ac0e0d97ce45cd83d1d7243c060cb8461dda5e9"
 
 [[projects]]
   branch = "master"
@@ -101,7 +101,7 @@
     "unix",
     "windows"
   ]
-  revision = "7c87d13f8e835d2fb3a70a2912c811ed0c1d241b"
+  revision = "bff228c7b664c5fce602223a05fb708fd8654986"
 
 [[projects]]
   branch = "master"
@@ -112,11 +112,11 @@
     "go/internal/gcimporter",
     "go/types/typeutil"
   ]
-  revision = "28aef64757f4d432485ab970b094e1af8b301e84"
+  revision = "2475cf16d30626b42cfadd38c9be514959b36f37"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a7b23861217458afa51a29d0f44c8cc3d256c9a73ee8be68691fea51fa880dd8"
+  inputs-digest = "836c67d93d98e10dbc75f81186288d462cf71f3881b0f0f07c464726a07e08ce"
   solver-name = "gps-cdcl"
   solver-version = 1
