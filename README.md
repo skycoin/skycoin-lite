@@ -30,6 +30,8 @@ created starting from [mobile/api.go](mobile/api.go).
 
 ### Running tests
 
+#### Gopherjs tests
+
 gopherjs tests can be run with
 
 ```sh
@@ -49,6 +51,22 @@ npm install --global source-map-support
 ```
 
 and make sure `NODE_PATH` is set to the value of `npm root --global` in your environment.
+
+#### TS cipher test suite
+
+The repository includes a TypeScript version of the cipher test suite, originally written in Go in
+the Skycoin main repository. Because the tests take a significant amount of time to complete in
+JavaScript/TypeScript, the test suite can be run with a limited number of cases with
+
+```sh
+make test-suite-ts
+```
+
+The test suite can be run with all test cases using
+
+```sh
+make test-suite-ts-extensive
+```
 
 ### Formatting
 
