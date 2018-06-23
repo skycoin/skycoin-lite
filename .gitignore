@@ -3,3 +3,9 @@ gopherjs-tool.exe
 gopherjs-tool
 skycoin.js
 skycoin.js.map
+
+# dependencies
+/node_modules
+
+# temp files
+/coverage

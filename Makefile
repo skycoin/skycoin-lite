@@ -11,9 +11,15 @@ build-js-min: ## Build /skycoin/skycoin.go. The result is minified and saved in 
 	go build -o gopherjs-tool vendor/github.com/gopherjs/gopherjs/tool.go
 	GOOS=linux ./gopherjs-tool build skycoin/skycoin.go -m
 
-test-js:
+test-js: ## Run the Go tests using JavaScript
 	go build -o gopherjs-tool vendor/github.com/gopherjs/gopherjs/tool.go
 	./gopherjs-tool test ./skycoin/ -v
+
+test-suite-ts: ## Run the ts version of the cipher test suite. Use a small number of test cases
+	npm run test
+
+test-suite-ts-extensive: ## Run the ts version of the cipher test suite. All the test cases
+	npm run test-extensive
 
 test:
 	go test ./... -timeout=10m -cover

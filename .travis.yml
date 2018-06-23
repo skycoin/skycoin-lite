@@ -8,6 +8,7 @@ go:
 install:
   - go get -t ./...
   - make install-linters
+  - npm install
   - npm install --global source-map-support
   - go get github.com/gopherjs/gopherjs
   - cd $GOPATH/src/github.com/gopherjs/gopherjs/node-syscall/
@@ -20,6 +21,7 @@ install:
 script:
   - make check
   - make build-js-min
+  - make test-suite-ts
   - NODE_PATH=$(npm root --global) make test-js
 
 notifications:
