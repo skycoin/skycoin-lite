@@ -31,7 +31,7 @@ lint: ## Run linters. Use make install-linters first.
 		-E unparam \
 		-E deadcode \
 		-E errcheck \
-		-E gas \
+		-E gosec \
 		-E goconst \
 		-E gofmt \
 		-E golint \
