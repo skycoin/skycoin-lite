@@ -8,6 +8,16 @@ and a JS library with [gopherjs](https://github.com/gopherjs/gopherjs).
 
 Skycoin Liteclient supports go1.10+.
 
+## Important note about error handling
+
+Many functions on this library call the `panic()` function of the Go programming language in case of important
+errors, however, for various reasons the panics are converted into errors on each supported language. Due to
+this, it is important to bear in mind that errors returned by this library may be due to extremely important
+problems and continuing the execution of operations with results obtained from the library could cause loss
+of coins.
+
+It is recommended to be very careful with errors.
+
 ## Compiling Android aar and jar
 
 For the compilation process to Android Archive, we use [Go Mobile](https://github.com/golang/mobile).
