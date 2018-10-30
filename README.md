@@ -2,8 +2,8 @@
 
 # Skycoin Liteclient
 
-This repository contains a liteclient for Skycoin written in Go. At the moment it is only used to compile
-an [Android Archive](https://developer.android.com/studio/projects/android-library.html)
+This repository contains a liteclient for Skycoin written in Go. At the moment it is used to compile
+an [Android Archive](https://developer.android.com/studio/projects/android-library.html), an iOS Framework,
 and a JS library with [gopherjs](https://github.com/gopherjs/gopherjs).
 
 Skycoin Liteclient supports go1.10+.
@@ -18,12 +18,15 @@ of coins.
 
 It is recommended to be very careful with errors.
 
-## Compiling Android aar and jar
+## Compiling Android aar and jar, and iOS Framework
 
-For the compilation process to Android Archive, we use [Go Mobile](https://github.com/golang/mobile).
+For the compilation process to Android Archive and iOS Framework, we use [Go Mobile](https://github.com/golang/mobile).
 
 ```bash
 $ gomobile bind -target=android github.com/skycoin/skycoin-lite/mobile
+```
+```bash
+$ gomobile bind -target=ios github.com/skycoin/skycoin-lite/mobile
 ```
 
 ## Compile javascript library
@@ -35,7 +38,7 @@ After compiling, the main.js and main.js.map files will be created/updated in th
 
 ## Development
 
-The javascript library is created starting from [gopher/main.go](gopher/main.go). The Android library is
+The javascript library is created starting from [gopher/main.go](gopher/main.go). The Android/iOS library is
 created starting from [mobile/api.go](mobile/api.go).
 
 ### Running tests
