@@ -3,7 +3,6 @@ package liteclient
 import (
 	"encoding/hex"
 	"encoding/json"
-	"log"
 
 	"github.com/skycoin/skycoin/src/cipher"
 	"github.com/skycoin/skycoin/src/coin"
@@ -143,17 +142,7 @@ func buildTransaction(inputsBody string, outputsBody string, signatureList []str
 	} else {
 		newTransaction.Sigs = make([]cipher.Sig, len(signatureList))
 		for i, sig := range signatureList {
-			decodedSig, e := hex.DecodeString(sig)
-			if e != nil {
-				panic(e)
-			}
-
-			s := cipher.Sig{}
-			if len(decodedSig) != len(s) {
-				log.Panic("Invalid signature length")
-			}
-			copy(s[:], decodedSig[:])
-			newTransaction.Sigs[i] = s
+			newTransaction.Sigs[i] = cipher.MustSigFromHex(sig)
 		}
 	}
 	newTransaction.UpdateHeader()
