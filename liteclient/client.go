@@ -86,10 +86,9 @@ func PrepareTransactionWithSignatures(inputsBody string, outputsBody string, sig
 	return hex.EncodeToString(d)
 }
 
-// Creates a coin.Transaction using the given lists of inputs, outputs and signatures. If signatureList is nill, the
-// signatures are created using the Secret property of each input.
+// Creates a coin.Transaction using the given lists of inputs, outputs and signatures. If signatureList is nil or
+// empty the signatures are created using the Secret property of each input.
 // inputsBody and outputsBody are JSONified arrays of TransactionInput and TransactionOutput, respectively.
-// signatureList is a JSONified array of strings.
 func buildTransaction(inputsBody string, outputsBody string, signatureList []string) coin.Transaction {
 	var inputs []TransactionInput
 	var outputs []TransactionOutput
@@ -107,7 +106,7 @@ func buildTransaction(inputsBody string, outputsBody string, signatureList []str
 	keys := make([]cipher.SecKey, len(inputs))
 
 	for i, in := range inputs {
-		if signatureList == nil {
+		if len(signatureList) == 0 {
 			k, err := cipher.SecKeyFromHex(in.Secret)
 			if err != nil {
 				panic(err)
@@ -137,7 +136,7 @@ func buildTransaction(inputsBody string, outputsBody string, signatureList []str
 		newTransaction.PushOutput(addr, out.Coins, out.Hours)
 	}
 
-	if signatureList == nil {
+	if len(signatureList) == 0 {
 		newTransaction.SignInputs(keys)
 	} else {
 		newTransaction.Sigs = make([]cipher.Sig, len(signatureList))
