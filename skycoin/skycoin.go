@@ -9,6 +9,7 @@ func main() {
 	js.Global.Set("Cipher", map[string]interface{}{
 		"GenerateAddresses":  liteclient.GenerateAddress,
 		"PrepareTransaction": liteclient.PrepareTransaction,
+		"PrepareTransactionWithSignatures": liteclient.PrepareTransactionWithSignatures,
 	})
 
 	js.Global.Set("CipherExtras", map[string]interface{}{
