@@ -7,9 +7,10 @@ import (
 
 func main() {
 	js.Global.Set("Cipher", map[string]interface{}{
-		"GenerateAddresses":  liteclient.GenerateAddress,
-		"PrepareTransaction": liteclient.PrepareTransaction,
+		"GenerateAddresses":                liteclient.GenerateAddress,
+		"PrepareTransaction":               liteclient.PrepareTransaction,
 		"PrepareTransactionWithSignatures": liteclient.PrepareTransactionWithSignatures,
+		"GetTransactionInnerHash":          liteclient.GetTransactionInnerHash,
 	})
 
 	js.Global.Set("CipherExtras", map[string]interface{}{
@@ -22,5 +23,6 @@ func main() {
 		"AddressFromSecKey": liteclient.AddressFromSecKey,
 		"PubKeyFromSig":     liteclient.PubKeyFromSig,
 		"SignHash":          liteclient.SignHash,
+		"AddSHA256":         liteclient.AddSHA256,
 	})
 }

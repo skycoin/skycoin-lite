@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 
 	"github.com/skycoin/skycoin/src/cipher"
+	"github.com/skycoin/skycoin/src/cipher/base58"
 	"github.com/skycoin/skycoin/src/coin"
 )
 
@@ -65,7 +66,7 @@ func GenerateAddresses(seed string, num int) []Address {
 // PrepareTransaction receives inputs and outputs and returns a signed transaction
 // inputsBody and outputsBody are JSONified arrays of TransactionInput and TransactionOutput, respectively.
 func PrepareTransaction(inputsBody string, outputsBody string) string {
-	newTransaction := buildTransaction(inputsBody, outputsBody, nil)
+	newTransaction := buildTransaction(inputsBody, outputsBody, nil, false)
 	d := newTransaction.Serialize()
 
 	return hex.EncodeToString(d)
@@ -80,16 +81,25 @@ func PrepareTransactionWithSignatures(inputsBody string, outputsBody string, sig
 		panic(err)
 	}
 
-	newTransaction := buildTransaction(inputsBody, outputsBody, signatures)
+	newTransaction := buildTransaction(inputsBody, outputsBody, signatures, false)
 	d := newTransaction.Serialize()
 
 	return hex.EncodeToString(d)
 }
 
+// GetTransactionInnerHash receives the inputs and outputs, creates a transaction and returns its inner hash.
+// inputsBody and outputsBody are JSONified arrays of TransactionInput and TransactionOutput, respectively.
+func GetTransactionInnerHash(inputsBody string, outputsBody string) string {
+	newTransaction := buildTransaction(inputsBody, outputsBody, nil, true)
+
+	return newTransaction.InnerHash.Hex()
+}
+
 // Creates a coin.Transaction using the given lists of inputs, outputs and signatures. If signatureList is nil or
 // empty the signatures are created using the Secret property of each input.
 // inputsBody and outputsBody are JSONified arrays of TransactionInput and TransactionOutput, respectively.
-func buildTransaction(inputsBody string, outputsBody string, signatureList []string) coin.Transaction {
+// signatureList is a list of signatures as Base58 strings. If ignoreSigning == true, then the transaction is not signed.
+func buildTransaction(inputsBody string, outputsBody string, signatureList []string, ignoreSigning bool) coin.Transaction {
 	var inputs []TransactionInput
 	var outputs []TransactionOutput
 
@@ -106,7 +116,7 @@ func buildTransaction(inputsBody string, outputsBody string, signatureList []str
 	keys := make([]cipher.SecKey, len(inputs))
 
 	for i, in := range inputs {
-		if len(signatureList) == 0 {
+		if len(signatureList) == 0 && !ignoreSigning {
 			k, err := cipher.SecKeyFromHex(in.Secret)
 			if err != nil {
 				panic(err)
@@ -136,18 +146,27 @@ func buildTransaction(inputsBody string, outputsBody string, signatureList []str
 		newTransaction.PushOutput(addr, out.Coins, out.Hours)
 	}
 
-	if len(signatureList) == 0 {
-		newTransaction.SignInputs(keys)
-	} else {
-		newTransaction.Sigs = make([]cipher.Sig, len(signatureList))
-		for i, sig := range signatureList {
-			newTransaction.Sigs[i] = cipher.MustSigFromHex(sig)
+	if !ignoreSigning {
+		if len(signatureList) == 0 {
+			newTransaction.SignInputs(keys)
+		} else {
+			newTransaction.Sigs = make([]cipher.Sig, len(signatureList))
+			for i, sig := range signatureList {
+				sigBytes, err := base58.Base582Hex(sig)
+				if err != nil {
+					panic(err)
+				}
+				newTransaction.Sigs[i] = cipher.NewSig(sigBytes)
+			}
 		}
 	}
+
 	newTransaction.UpdateHeader()
 
-	if err := newTransaction.Verify(); err != nil {
-		panic(err)
+	if !ignoreSigning {
+		if err := newTransaction.Verify(); err != nil {
+			panic(err)
+		}
 	}
 
 	return newTransaction

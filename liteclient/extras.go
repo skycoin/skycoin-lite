@@ -91,3 +91,12 @@ func SignHash(hash string, seckey string) string {
 	sig := cipher.SignHash(h, s)
 	return sig.Hex()
 }
+
+// AddSHA256 returns the SHA256 hash of to two concatenated hashes
+func AddSHA256(hash1 string, hash2 string) string {
+	h1 := cipher.MustSHA256FromHex(hash1)
+	h2 := cipher.MustSHA256FromHex(hash2)
+
+	h := cipher.AddSHA256(h1, h2)
+	return h.Hex()
+}
