@@ -2,11 +2,13 @@
 
 # Skycoin Liteclient
 
-This repository contains a liteclient for Skycoin written in Go. At the moment it is used to compile
+This repository contains a small wrapper for Skycoin (written in Go) to provide mobile and JS bindings. 
+
+At the moment it is used to compile
 an [Android Archive](https://developer.android.com/studio/projects/android-library.html), an iOS Framework,
 and a JS library with [gopherjs](https://github.com/gopherjs/gopherjs).
 
-Skycoin Liteclient supports go1.10+.
+Supports go1.10+.
 
 ## Important note about error handling
 
