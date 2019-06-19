@@ -14,7 +14,9 @@ install:
 script:
   - make check
   - make build-js-min
+  - make build-wasm
   - make test-suite-ts
+  - make test-suite-ts-wasm
 
 notifications:
   # https://github.com/kvld/travisci-telegram TravisCI Telegram Bot integration

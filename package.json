@@ -2,8 +2,9 @@
   "name": "skycoin-lite",
   "version": "0.0.0",
   "scripts": {
-    "test": "karma start karma.conf.js -sm=false --single-run --browsers ChromeHeadless --browserNoActivityTimeout=180000",
-    "test-extensive": "karma start karma.conf.js -sm=false --single-run --browsers ChromeHeadless --browserNoActivityTimeout=180000 --mode 1"
+    "test": "karma start karma-gopher.conf.js -sm=false --single-run --browsers ChromeHeadless --browserNoActivityTimeout=180000",
+    "test-extensive": "karma start karma-gopher.conf.js -sm=false --single-run --browsers ChromeHeadless --browserNoActivityTimeout=180000 --mode 1",
+    "test-wasm": "karma start karma-wasm.conf.js -sm=false --single-run --browsers ChromeHeadless --browserNoActivityTimeout=180000"
   },
   "private": true,
   "devDependencies": {
