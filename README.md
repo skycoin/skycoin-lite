@@ -85,7 +85,7 @@ and make sure `NODE_PATH` is set to the value of `npm root --global` in your env
 performance issues and should not be used. Please compile to a wasm file instead.
 
 The repository includes a TypeScript version of the cipher test suite, originally written in Go in
-the Skycoin main repository. It test the result of the GopherJS version of the library, so before
+the Skycoin main repository. It test the GopherJS version of the library, so before
 using it you must compile the GopherJS version with `make build-js` or `make build-js-min`.
 Because testing the GopherJS version takes a significant amount of time to complete, the test suite
 can be run with a limited number of cases with:
@@ -103,7 +103,7 @@ make test-suite-ts-extensive
 #### TS cipher test suite for wasm
 
 There is test suite for the wasm version of the library, just like there is one for the GopherJS
-version. Before using it you must compile the wasm version with `make build-wasm`. the test suite
+version. Before using it you must compile the wasm version with `make build-wasm`. The test suite
 can be run with:
 
 ```sh

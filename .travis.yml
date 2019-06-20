@@ -3,7 +3,7 @@ dist: trusty
 language: go
 
 go:
-  - "1.10.x"
+  - "1.12.x"
 
 install:
   - go get -t ./...

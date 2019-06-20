@@ -7,6 +7,10 @@ import (
 	"github.com/skycoin/skycoin-lite/liteclient"
 )
 
+// recoverFromPanic captures the panics and returns an object with the error message.
+// It must be used in all the functions that can be called using the compiled wasm
+// file, as the Go code contains multiple panics that would completelly stop the
+// excecution of the wasm application without returning adequate errors to the JS code.
 func recoverFromPanic(response *interface{}) {
 	if err := recover(); err != nil {
 		finalResponse := make(map[string]interface{})
@@ -23,6 +27,7 @@ func recoverFromPanic(response *interface{}) {
 	}
 }
 
+// checkParams checks if all the params are of he type js.TypeString.
 func checkParams(params *[]js.Value) {
 	for _, element := range *params {
 		if element.Type() != js.TypeString {
@@ -31,7 +36,9 @@ func checkParams(params *[]js.Value) {
 	}
 }
 
-// Main functions
+// Main functions:
+// The following functions are simply wrappers to call the functions in
+// liteclient/client.go.
 
 func generateAddress(this js.Value, inputs []js.Value) (response interface{}) {
 	defer recoverFromPanic(&response)
@@ -66,7 +73,9 @@ func prepareTransactionWithSignatures(this js.Value, inputs []js.Value) (respons
 	return functionResponse
 }
 
-// Extra functions
+// Extra functions:
+// The following functions are simply wrappers to call the functions in
+// liteclient/extras.go.
 
 func verifySignature(this js.Value, inputs []js.Value) (response interface{}) {
 	defer recoverFromPanic(&response)
@@ -150,13 +159,17 @@ func signHash(this js.Value, inputs []js.Value) (response interface{}) {
 }
 
 func main() {
+	// Create a channel for keeping the application alive
 	c := make(chan bool)
+
+	// Add the main functions to the the "window.SkycoinCipher" object.
 	cipherNamespace := "SkycoinCipher"
 	js.Global().Set(cipherNamespace, js.FuncOf(nil))
 	js.Global().Get(cipherNamespace).Set("generateAddress", js.FuncOf(generateAddress))
 	js.Global().Get(cipherNamespace).Set("prepareTransaction", js.FuncOf(prepareTransaction))
 	js.Global().Get(cipherNamespace).Set("prepareTransactionWithSignatures", js.FuncOf(prepareTransactionWithSignatures))
 
+	// Add the extra functions to the the "window.SkycoinCipherExtras" object.
 	cipherExtrasNamespace := "SkycoinCipherExtras"
 	js.Global().Set(cipherExtrasNamespace, js.FuncOf(nil))
 	js.Global().Get(cipherExtrasNamespace).Set("verifySignature", js.FuncOf(verifySignature))
