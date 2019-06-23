@@ -15,8 +15,11 @@ module.exports = function (config) {
     ],
     files: [
       'tests/cipher-wasm.spec.ts',
+      'tests/cipher-wasm-internal.spec.ts',
       { pattern: 'tests/test-fixtures/*.golden', included: false },
       { pattern: 'skycoin-lite.wasm', included: false },
+      { pattern: 'vendor/github.com/skycoin/skycoin/src/cipher/secp256k1-go/test.wasm', included: false },
+      { pattern: 'vendor/github.com/skycoin/skycoin/src/cipher/secp256k1-go/secp256k1-go2/test.wasm', included: false },
       { pattern: 'tests/utils.ts', included: true },
       { pattern: 'tests/wasm_exec.js', included: true },
     ],

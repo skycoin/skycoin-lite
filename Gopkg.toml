@@ -31,5 +31,4 @@ required = ["github.com/gopherjs/gopherjs"]
   name = "github.com/skycoin/skycoin"
 
 [prune]
-  go-tests = true
   unused-packages = true
