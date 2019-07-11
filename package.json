@@ -4,7 +4,9 @@
   "scripts": {
     "test": "karma start karma-gopher.conf.js -sm=false --single-run --browsers ChromeHeadless --browserNoActivityTimeout=180000",
     "test-extensive": "karma start karma-gopher.conf.js -sm=false --single-run --browsers ChromeHeadless --browserNoActivityTimeout=180000 --mode 1",
-    "test-wasm": "karma start karma-wasm.conf.js -sm=false --single-run --browsers ChromeHeadless --browserNoActivityTimeout=180000"
+    "test-wasm": "karma start karma-wasm.conf.js -sm=false --single-run --browsers ChromeHeadless --browserNoActivityTimeout=180000",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "private": true,
   "devDependencies": {
@@ -21,5 +23,9 @@
     "karma-read-json": "^1.1.0",
     "karma-typescript": "3.0.12",
     "typescript": "~2.4.2"
+  },
+  "snyk": true,
+  "dependencies": {
+    "snyk": "^1.190.0"
   }
 }
