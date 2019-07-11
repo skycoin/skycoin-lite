@@ -1,20 +1,24 @@
 package mobile
 
 import (
-	"encoding/json"
 	"encoding/hex"
+	"encoding/json"
+
+	"github.com/skycoin/skycoin/src/cipher/bip39"
+
 	"github.com/skycoin/skycoin-lite/liteclient"
-	"github.com/skycoin/skycoin/src/cipher/go-bip39"
 )
 
+// GetAddresses generates num addresses from seed using
+// the Skycoin deterministic address generator
 func GetAddresses(seed string, num int) (addr string, err error) {
 	defer func() {
 		r := recover()
 		err, _ = r.(error)
 	}()
 	hexSeed := hex.EncodeToString([]byte(seed))
-	addresses := liteclient.GenerateAddresses(hexSeed, num);
-	
+	addresses := liteclient.GenerateAddresses(hexSeed, num)
+
 	byteaddr, err := json.Marshal(addresses)
 	if err != nil {
 		return "", err
@@ -38,7 +42,7 @@ func PrepareTransaction(inputsBody string, outputsBody string) (tx string, err e
 	return
 }
 
-
+// NewWordSeed wraps bip39.NewDefaultMnemonic
 func NewWordSeed() (string, error) {
 	seed, err := bip39.NewDefaultMnemonic()
 	if err != nil {
@@ -47,4 +51,3 @@ func NewWordSeed() (string, error) {
 
 	return seed, nil
 }
-

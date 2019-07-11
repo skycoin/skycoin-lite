@@ -16,7 +16,7 @@
 // time before the Go 1.8 release and rebuild and redeploy their
 // developer tools, which will then be able to consume both Go 1.7 and
 // Go 1.8 export data files, so they will work before and after the
-// Go update. (See discussion at https://github.com/golang/go/issues/15651.)
+// Go update. (See discussion at https://golang.org/issue/15651.)
 //
 package gcexportdata // import "golang.org/x/tools/go/gcexportdata"
 
@@ -83,6 +83,14 @@ func Read(in io.Reader, fset *token.FileSet, imports map[string]*types.Package, 
 	// TODO(adonovan): delete once v1.7 has been around for a while.
 	if bytes.HasPrefix(data, []byte("package ")) {
 		return gcimporter.ImportData(imports, path, path, bytes.NewReader(data))
+	}
+
+	// The indexed export format starts with an 'i'; the older
+	// binary export format starts with a 'c', 'd', or 'v'
+	// (from "version"). Select appropriate importer.
+	if len(data) > 0 && data[0] == 'i' {
+		_, pkg, err := gcimporter.IImportData(fset, imports, data[1:], path)
+		return pkg, err
 	}
 
 	_, pkg, err := gcimporter.BImportData(fset, imports, data, path)
