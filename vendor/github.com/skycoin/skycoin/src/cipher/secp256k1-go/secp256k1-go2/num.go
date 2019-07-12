@@ -1,8 +1,6 @@
 package secp256k1go
 
 import (
-	"encoding/hex"
-	"fmt"
 	"math/big"
 )
 
@@ -16,37 +14,25 @@ type Number struct {
 	big.Int
 }
 
-// Print prints the label with hex number string
-func (num *Number) Print(label string) {
-	fmt.Println(label, hex.EncodeToString(num.Bytes()))
-}
-
 func (num *Number) modMul(a, b, m *Number) {
 	num.Mul(&a.Int, &b.Int)
 	num.Mod(&num.Int, &m.Int)
-	return
 }
 
 func (num *Number) modInv(a, b *Number) {
 	num.ModInverse(&a.Int, &b.Int)
-	return
 }
 
 func (num *Number) mod(a *Number) {
 	num.Mod(&num.Int, &a.Int)
-	return
 }
 
 // SetHex sets number from string
 func (num *Number) SetHex(s string) {
-	num.SetString(s, 16)
+	if _, ok := num.SetString(s, 16); !ok {
+		panic("Number.SetHex failed")
+	}
 }
-
-//SetBytes and GetBytes are inherited by default
-//added
-//func (a *Number) SetBytes(b []byte) {
-//	a.SetBytes(b)
-//}
 
 func (num *Number) maskBits(bits uint) {
 	mask := new(big.Int).Lsh(BigInt1, bits)
@@ -77,13 +63,13 @@ func (num *Number) splitExp(r1, r2 *Number) {
 	r2.Sub(&bnt1.Int, &bnt2.Int)
 }
 
-func (num *Number) split(rl, rh *Number, bits uint) { // nolint: unparam
+func (num *Number) split(rl, rh *Number, bits uint) { //nolint:unparam
 	rl.Int.Set(&num.Int)
 	rh.Int.Rsh(&rl.Int, bits)
 	rl.maskBits(bits)
 }
 
-func (num *Number) rsh(bits uint) { // nolint: unparam
+func (num *Number) rsh(bits uint) { //nolint:unparam
 	num.Rsh(&num.Int, bits)
 }
 
@@ -102,13 +88,13 @@ func (num *Number) IsOdd() bool {
 	return num.Bit(0) != 0
 }
 
-func (num *Number) getBin(le int) []byte { // nolint: unparam
-	bts := num.Bytes()
-	if len(bts) > le {
+// LeftPadBytes left-pads a byte slice with NUL bytes up to a length
+func LeftPadBytes(b []byte, length int) []byte { //nolint:unparam
+	if len(b) > length {
 		panic("buffer too small")
 	}
-	if len(bts) == le {
-		return bts
+	if len(b) == length {
+		return b
 	}
-	return append(make([]byte, le-len(bts)), bts...)
+	return append(make([]byte, length-len(b)), b...)
 }

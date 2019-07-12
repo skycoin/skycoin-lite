@@ -1,21 +1,27 @@
 sudo: required
-dist: trusty
+dist: xenial
 language: go
 
 go:
-  - "1.10.x"
+  - "1.12.x"
 
 install:
+  - if [[ ! -d $GOPATH/src/github.com/skycoin/skycoin-lite ]]; then mkdir -p $GOPATH/src/github.com/skycoin; ln -s $TRAVIS_BUILD_DIR $GOPATH/src/github.com/skycoin/skycoin-lite; fi
+  - cd $GOPATH/src/github.com/skycoin/skycoin-lite
   - go get -t ./...
-  - make install-linters
-  - npm install
-  - npm install --global source-map-support
+  - go get -u github.com/FiloSottile/vendorcheck
+  # Install pinned golangci-lint, overriding the latest version install by make install-linters
+  - VERSION=1.17.1 ./ci-scripts/install-golangci-lint.sh
+  - cd js && npm install && npm install --global source-map-support
 
 script:
+  - cd $GOPATH/src/github.com/skycoin/skycoin-lite
   - make check
   - make build-js-min
   - make test-suite-ts
 
 notifications:
+  email:
+    - travis@skycoin.net
   # https://github.com/kvld/travisci-telegram TravisCI Telegram Bot integration
   webhooks: https://fathomless-fjord-24024.herokuapp.com/notify

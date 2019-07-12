@@ -11,7 +11,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:97f22940417bef52bee990904a394707de253f8ccbd2d17938fbfdeebfbc8960"
+  digest = "1:b32c5e3359a78839c699d755633c1e15815842826ba22109dc529cc89c90604b"
   name = "github.com/gopherjs/gopherjs"
   packages = [
     ".",
@@ -28,7 +28,7 @@
     "js",
   ]
   pruneopts = "UT"
-  revision = "8dffc02ea1cb8398bb73f30424697c60fcf8d4c5"
+  revision = "3e4dfb77656c424b6d1196a4d5fed0fcf63677cc"
 
 [[projects]]
   digest = "1:870d441fe217b8e689d7949fef6e43efbc787e50f200cb1e70dbca9204a1d6be"
@@ -67,79 +67,83 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:9d29b003dc5f98647a5dd6754d65c07171fcd35761102ea56ecd3d6993adee7f"
+  digest = "1:1e8a61d7b130a14881417800c56cd669a063890f7b0191937099d8ca990b29fa"
   name = "github.com/shurcooL/httpfs"
   packages = [
     "filter",
     "vfsutil",
   ]
   pruneopts = "UT"
-  revision = "809beceb23714880abc4a382a00c05f89d13b1cc"
+  revision = "8d4bc4ba774931155e6cd5ef6098cb038dd45135"
 
 [[projects]]
   branch = "develop"
-  digest = "1:01affb34f955f9fc1fa6138faf22a131a048cd860f7b07eb115290c78c23fbe5"
+  digest = "1:9afd6145eeb6b534fdbaf5a9b8db5186d3edec6804c8c53c71f0b13af5e3cc88"
   name = "github.com/skycoin/skycoin"
   packages = [
     "src/cipher",
     "src/cipher/base58",
+    "src/cipher/bip39",
+    "src/cipher/bip39/wordlists",
     "src/cipher/encoder",
-    "src/cipher/go-bip39",
+    "src/cipher/pbkdf2",
     "src/cipher/ripemd160",
     "src/cipher/secp256k1-go",
     "src/cipher/secp256k1-go/secp256k1-go2",
     "src/coin",
+    "src/util/mathutil",
   ]
   pruneopts = "UT"
-  revision = "1ecda0bc8ae3df8dc522965082c80477f9edd489"
+  revision = "210a51f06749d6edcec4237d2488b614085cfcba"
 
 [[projects]]
-  digest = "1:645cabccbb4fa8aab25a956cbcbdf6a6845ca736b2c64e197ca7cbb9d210b939"
+  digest = "1:e096613fb7cf34743d49af87d197663cfccd61876e2219853005a57baedfa562"
   name = "github.com/spf13/cobra"
   packages = ["."]
   pruneopts = "UT"
-  revision = "ef82de70bb3f60c65fb8eebacbb2d122ef517385"
-  version = "v0.0.3"
+  revision = "f2b07da1e2c38d5f12845a4f607e2e1018cbb1f5"
+  version = "v0.0.5"
 
 [[projects]]
-  digest = "1:9424f440bba8f7508b69414634aef3b2b3a877e522d8a4624692412805407bb7"
+  digest = "1:c1b1102241e7f645bc8e0c22ae352e8f0dc6484b6cb4d132fa9f24174e0119e2"
   name = "github.com/spf13/pflag"
   packages = ["."]
   pruneopts = "UT"
-  revision = "583c0c0531f06d5278b7d917446061adc344b5cd"
-  version = "v1.0.1"
+  revision = "298182f68c66c05229eb03ac171abe6e309ee79a"
+  version = "v1.0.3"
 
 [[projects]]
   branch = "master"
-  digest = "1:3f3a05ae0b95893d90b9b3b5afdb79a9b3d96e4e36e099d841ae602e4aca0da8"
+  digest = "1:bbe51412d9915d64ffaa96b51d409e070665efc5194fcf145c4a27d4133107a4"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
   pruneopts = "UT"
-  revision = "8ac0e0d97ce45cd83d1d7243c060cb8461dda5e9"
+  revision = "4def268fd1a49955bfb3dda92fe3db4f924f2285"
 
 [[projects]]
   branch = "master"
-  digest = "1:51c25fd91b64d31919dd9ff63f8d8334d2687b72e5517019e1a9a5e1d55cb6c7"
+  digest = "1:47a52ed81842d647114b9210719bb6d8e1595094a6cb23e70123bb1f109f3c80"
   name = "golang.org/x/sys"
   packages = [
     "unix",
     "windows",
   ]
   pruneopts = "UT"
-  revision = "bff228c7b664c5fce602223a05fb708fd8654986"
+  revision = "6ec70d6a5542cba804c6d16ebe8392601a0b7b60"
 
 [[projects]]
   branch = "master"
-  digest = "1:4f2706ef2847ab6456a69b2573574fe5e35bebc0e8364dfcdaa9d449338b4efd"
+  digest = "1:bbc4df114ba39b7578b420b423cee3e7d0d3f5a0bf67b47749a9efd83e799c19"
   name = "golang.org/x/tools"
   packages = [
+    "go/ast/astutil",
     "go/buildutil",
     "go/gcexportdata",
     "go/internal/gcimporter",
     "go/types/typeutil",
   ]
   pruneopts = "UT"
-  revision = "2475cf16d30626b42cfadd38c9be514959b36f37"
+  revision = "9a621aea19f8341c01da59e0d42dd97700f677d0"
 
 [solve-meta]
   analyzer-name = "dep"
@@ -148,7 +152,7 @@
     "github.com/gopherjs/gopherjs",
     "github.com/gopherjs/gopherjs/js",
     "github.com/skycoin/skycoin/src/cipher",
-    "github.com/skycoin/skycoin/src/cipher/go-bip39",
+    "github.com/skycoin/skycoin/src/cipher/bip39",
     "github.com/skycoin/skycoin/src/cipher/secp256k1-go",
     "github.com/skycoin/skycoin/src/coin",
   ]

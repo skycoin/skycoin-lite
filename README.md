@@ -2,7 +2,7 @@
 
 # Skycoin Liteclient
 
-This repository contains a small wrapper for Skycoin (written in Go) to provide mobile and JS bindings. 
+This repository contains a small wrapper for Skycoin (written in Go) to provide mobile and JS bindings.
 
 At the moment it is used to compile
 an [Android Archive](https://developer.android.com/studio/projects/android-library.html), an iOS Framework,
@@ -26,8 +26,6 @@ For the compilation process to Android Archive and iOS Framework, we use [Go Mob
 
 ```bash
 $ gomobile bind -target=android github.com/skycoin/skycoin-lite/mobile
-```
-```bash
 $ gomobile bind -target=ios github.com/skycoin/skycoin-lite/mobile
 ```
 
@@ -62,6 +60,7 @@ can't be vendored by dep. You'll have to install gopherjs to your `GOPATH` with 
 To enable stacktraces, install source maps:
 
 ```sh
+cd js
 npm install --global source-map-support
 ```
 
@@ -103,3 +102,4 @@ Run linters:
 
 ```sh
 make lint
+```
