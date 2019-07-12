@@ -1,15 +1,18 @@
 .DEFAULT_GOAL := help
-
-.PHONY: build-js build-js-min test lint check install-linters format fix-skycoin-dep help
+.PHONY: build-js build-js-min
+.PHONY: test lint check
+.PHONY: install-linters format
+.PHONY: help
 .PHONY: test-js
+.PHONY: test-suite-ts test-suite-ts-extensive
 
 build-js: ## Build /skycoin/skycoin.go. The result is saved in the repo root
 	go build -o gopherjs-tool vendor/github.com/gopherjs/gopherjs/tool.go
-	GOOS=linux ./gopherjs-tool build skycoin/skycoin.go
+	GOOS=linux ./gopherjs-tool build skycoin/skycoin.go -o js/skycoin.js
 
 build-js-min: ## Build /skycoin/skycoin.go. The result is minified and saved in the repo root
 	go build -o gopherjs-tool vendor/github.com/gopherjs/gopherjs/tool.go
-	GOOS=linux ./gopherjs-tool build skycoin/skycoin.go -m
+	GOOS=linux ./gopherjs-tool build skycoin/skycoin.go -m -o js/skycoin.js
 
 build-wasm: ## Build /wasm/skycoin.go. The result is saved in the repo root as skycoin-lite.wasm
 	GOOS=js GOARCH=wasm go build -o skycoin-lite.wasm ./wasm/skycoin.go
@@ -19,15 +22,15 @@ test-js: ## Run the Go tests using JavaScript
 	./gopherjs-tool test ./skycoin/ -v
 
 test-suite-ts: ## Run the ts version of the cipher test suite for GopherJS. Use a small number of test cases
-	npm run test
+	cd js && npm run test
 
 test-suite-ts-extensive: ## Run the ts version of the cipher test suite for GopherJS. All the test cases
-	npm run test-extensive
+	cd js && npm run test-extensive
 
 test-suite-ts-wasm: ## Run the ts version of the cipher test suite for wasm
 	cd vendor/github.com/skycoin/skycoin/src/cipher/secp256k1-go && GOOS=js GOARCH=wasm go test -c -o test.wasm
 	cd vendor/github.com/skycoin/skycoin/src/cipher/secp256k1-go/secp256k1-go2 && GOOS=js GOARCH=wasm go test -c -o test.wasm
-	npm run test-wasm
+	cd js && npm run test-wasm
 	cd vendor/github.com/skycoin/skycoin/src/cipher/secp256k1-go && rm test.wasm
 	cd vendor/github.com/skycoin/skycoin/src/cipher/secp256k1-go/secp256k1-go2 && rm test.wasm
 
@@ -36,37 +39,23 @@ test:
 
 lint: ## Run linters. Use make install-linters first.
 	vendorcheck ./...
-	gometalinter --deadline=3m -j 2 --disable-all --tests --exclude .. --vendor \
-		-E goimports \
-		-E unparam \
-		-E deadcode \
-		-E errcheck \
-		-E gosec \
-		-E goconst \
-		-E gofmt \
-		-E golint \
-		-E ineffassign \
-		-E maligned \
-		-E megacheck \
-		-E misspell \
-		-E nakedret \
-		-E structcheck \
-		-E unconvert \
-		-E varcheck \
-		-E vet \
-		./...
+	golangci-lint run -c ./.golangci.yml ./...
+	@# The govet version in golangci-lint is out of date and has spurious warnings, run it separately
+	go vet -all ./...
 
 check: lint test ## Run tests and linters
 
 install-linters: ## Install linters
 	go get -u github.com/FiloSottile/vendorcheck
-	go get -u github.com/alecthomas/gometalinter
-	gometalinter --vendored-linters --install
+	# For some reason this install method is not recommended, see https://github.com/golangci/golangci-lint#install
+	# However, they suggest `curl ... | bash` which we should not do
+	go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
 
 format: ## Formats the code. Must have goimports installed (use make install-linters).
-	goimports -w ./skycoin
-	goimports -w ./liteclient
-	goimports -w ./mobile
+	goimports -w -local github.com/skycoin/skycoin-lite ./skycoin
+	goimports -w -local github.com/skycoin/skycoin-lite ./liteclient
+	goimports -w -local github.com/skycoin/skycoin-lite ./mobile
+	goimports -w -local github.com/skycoin/skycoin-lite ./main.go
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

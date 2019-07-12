@@ -46,9 +46,9 @@ func GenerateAddresses(seed string, num int) []Address {
 			panic(err)
 		}
 
-		next, keys := cipher.GenerateDeterministicKeyPairsSeed([]byte(decodedSeed), 1)
+		next, keys := cipher.MustGenerateDeterministicKeyPairsSeed([]byte(decodedSeed), 1)
 		nextSeed = hex.EncodeToString(next)
-		pub := cipher.PubKeyFromSecKey(keys[0])
+		pub := cipher.MustPubKeyFromSecKey(keys[0])
 		address := Address{
 			NextSeed: nextSeed,
 			Secret:   keys[0].Hex(),
@@ -66,7 +66,10 @@ func GenerateAddresses(seed string, num int) []Address {
 // inputsBody and outputsBody are JSONified arrays of TransactionInput and TransactionOutput, respectively.
 func PrepareTransaction(inputsBody string, outputsBody string) string {
 	newTransaction := buildTransaction(inputsBody, outputsBody, nil)
-	d := newTransaction.Serialize()
+	d, err := newTransaction.Serialize()
+	if err != nil {
+		panic(err)
+	}
 
 	return hex.EncodeToString(d)
 }
@@ -81,7 +84,10 @@ func PrepareTransactionWithSignatures(inputsBody string, outputsBody string, sig
 	}
 
 	newTransaction := buildTransaction(inputsBody, outputsBody, signatures)
-	d := newTransaction.Serialize()
+	d, err := newTransaction.Serialize()
+	if err != nil {
+		panic(err)
+	}
 
 	return hex.EncodeToString(d)
 }
@@ -120,7 +126,9 @@ func buildTransaction(inputsBody string, outputsBody string, signatureList []str
 			panic(err)
 		}
 
-		newTransaction.PushInput(inputHash)
+		if err := newTransaction.PushInput(inputHash); err != nil {
+			panic(err)
+		}
 	}
 
 	for _, out := range outputs {
@@ -133,7 +141,9 @@ func buildTransaction(inputsBody string, outputsBody string, signatureList []str
 			panic("output address is the null address")
 		}
 
-		newTransaction.PushOutput(addr, out.Coins, out.Hours)
+		if err := newTransaction.PushOutput(addr, out.Coins, out.Hours); err != nil {
+			panic(err)
+		}
 	}
 
 	if len(signatureList) == 0 {
@@ -144,7 +154,9 @@ func buildTransaction(inputsBody string, outputsBody string, signatureList []str
 			newTransaction.Sigs[i] = cipher.MustSigFromHex(sig)
 		}
 	}
-	newTransaction.UpdateHeader()
+	if err := newTransaction.UpdateHeader(); err != nil {
+		panic(err)
+	}
 
 	if err := newTransaction.Verify(); err != nil {
 		panic(err)

@@ -42,11 +42,11 @@ func TestGenerateAddress(t *testing.T) {
 	signature := "ba85034f675b8a284537a0c23e4d55d5f8b4cc1620eee077a478482b8f7bf9304d17c16dd5aaf70d24df262c531f37e58a57469d1161d6134075ed8c203f7cbc01"
 	hash := "72cd6e8422c407fb6d098690f1130b7ded7ec2f7f5e1d30bd9d521f015363793"
 
-	liteclient.VerifySignature(pubkey, signature, hash)
+	liteclient.VerifyPubKeySignedHash(pubkey, signature, hash)
 
-	liteclient.ChkSig(address, hash, signature)
+	liteclient.VerifyAddressSignedHash(address, signature, hash)
 
-	liteclient.VerifySignedHash(signature, hash)
+	liteclient.VerifySignatureRecoverPubKey(signature, hash)
 
 	if liteclient.VerifySeckey(seckey) != 1 {
 		t.Fatalf("secp256k1.VerifySeckey failed")
