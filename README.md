@@ -25,7 +25,6 @@ It is recommended to be very careful with errors.
 For the compilation process to Android Archive and iOS Framework, we use [Go Mobile](https://github.com/golang/mobile).
 
 ```bash
-$ cd go
 $ gomobile bind -target=android github.com/skycoin/skycoin-lite/mobile
 $ gomobile bind -target=ios github.com/skycoin/skycoin-lite/mobile
 ```
