@@ -1,6 +1,10 @@
 // Runs the tests from src/cipher/sec256k1-go/ and src/cipher/sec256k1-go/secp256k1-go2/.
 // It needs the tests to be compiled, so it was created for being called by "make test-suite-ts-wasm"
 
+// This is done to make wasm_exec think that it is not running inside Node.js, so that it does not ask
+// for special parameters and works in a similar way as how it would do in an browser.
+global.process.title = '';
+
 // Required for wasm_exec to work correctly in Node.js.
 const util = require('util');
 TextEncoder = util.TextEncoder;
