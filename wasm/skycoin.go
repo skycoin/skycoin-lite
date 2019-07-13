@@ -1,3 +1,5 @@
+// +build js,wasm
+
 package main
 
 import (
@@ -9,8 +11,8 @@ import (
 
 // recoverFromPanic captures the panics and returns an object with the error message.
 // It must be used in all the functions that can be called using the compiled wasm
-// file, as the Go code contains multiple panics that would completelly stop the
-// excecution of the wasm application without returning adequate errors to the JS code.
+// file, as the Go code contains multiple panics that would completely stop the
+// execution of the wasm application without returning adequate errors to the JS code.
 func recoverFromPanic(response *interface{}) {
 	if err := recover(); err != nil {
 		finalResponse := make(map[string]interface{})
