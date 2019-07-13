@@ -3,9 +3,13 @@ gopherjs-tool.exe
 gopherjs-tool
 skycoin.js
 skycoin.js.map
+test.wasm
 
 # dependencies
 /node_modules
+/js/node_modules
+/js/package-lock.json
 
 # temp files
 /coverage
+/js/coverage

@@ -77,29 +77,29 @@ func prepareTransactionWithSignatures(this js.Value, inputs []js.Value) (respons
 // The following functions are simply wrappers to call the functions in
 // liteclient/extras.go.
 
-func verifySignature(this js.Value, inputs []js.Value) (response interface{}) {
+func verifyPubKeySignedHash(this js.Value, inputs []js.Value) (response interface{}) {
 	defer recoverFromPanic(&response)
 	checkParams(&inputs)
 
-	liteclient.VerifySignature(inputs[0].String(), inputs[1].String(), inputs[2].String())
+	liteclient.VerifyPubKeySignedHash(inputs[0].String(), inputs[1].String(), inputs[2].String())
 
 	return
 }
 
-func chkSig(this js.Value, inputs []js.Value) (response interface{}) {
+func verifyAddressSignedHash(this js.Value, inputs []js.Value) (response interface{}) {
 	defer recoverFromPanic(&response)
 	checkParams(&inputs)
 
-	liteclient.ChkSig(inputs[0].String(), inputs[1].String(), inputs[2].String())
+	liteclient.VerifyAddressSignedHash(inputs[0].String(), inputs[1].String(), inputs[2].String())
 
 	return
 }
 
-func verifySignedHash(this js.Value, inputs []js.Value) (response interface{}) {
+func verifySignatureRecoverPubKey(this js.Value, inputs []js.Value) (response interface{}) {
 	defer recoverFromPanic(&response)
 	checkParams(&inputs)
 
-	liteclient.VerifySignedHash(inputs[0].String(), inputs[1].String())
+	liteclient.VerifySignatureRecoverPubKey(inputs[0].String(), inputs[1].String())
 
 	return
 }
@@ -172,9 +172,9 @@ func main() {
 	// Add the extra functions to the the "window.SkycoinCipherExtras" object.
 	cipherExtrasNamespace := "SkycoinCipherExtras"
 	js.Global().Set(cipherExtrasNamespace, js.FuncOf(nil))
-	js.Global().Get(cipherExtrasNamespace).Set("verifySignature", js.FuncOf(verifySignature))
-	js.Global().Get(cipherExtrasNamespace).Set("chkSig", js.FuncOf(chkSig))
-	js.Global().Get(cipherExtrasNamespace).Set("verifySignedHash", js.FuncOf(verifySignedHash))
+	js.Global().Get(cipherExtrasNamespace).Set("verifyPubKeySignedHash", js.FuncOf(verifyPubKeySignedHash))
+	js.Global().Get(cipherExtrasNamespace).Set("verifyAddressSignedHash", js.FuncOf(verifyAddressSignedHash))
+	js.Global().Get(cipherExtrasNamespace).Set("verifySignatureRecoverPubKey", js.FuncOf(verifySignatureRecoverPubKey))
 	js.Global().Get(cipherExtrasNamespace).Set("verifySeckey", js.FuncOf(verifySeckey))
 	js.Global().Get(cipherExtrasNamespace).Set("verifyPubkey", js.FuncOf(verifyPubkey))
 	js.Global().Get(cipherExtrasNamespace).Set("addressFromPubKey", js.FuncOf(addressFromPubKey))

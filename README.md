@@ -38,14 +38,14 @@ performance issues and should not be used. Please compile to a wasm file instead
 For the compilation process to javascript library, we use [gopherjs](https://github.com/gopherjs/gopherjs).
 
 To compile the library use `make build-js` or `make build-js-min` (if you want the final file to be minified).
-After compiling, `the main.js` and `main.js.map` files will be created/updated in the root of the repository.
+After compiling, the `skycoin.js` and `skycoin.js.map` files will be created/updated in the `js` folder.
 
 ## Compile wasm file
 
 > IMPORTANT: you need Go v1.12.x to use this function. It is not guaranteed to work with Go v1.13+.
 
 To compile the wasm file use `make build-wasm`. After compiling, the `skycoin-lite.wasm` file will be
-created/updated in the root of the repository.
+created/updated in the `js` folder.
 
 ## Development
 
