@@ -8,7 +8,7 @@ go:
 install:
   - if [[ ! -d $GOPATH/src/github.com/skycoin/skycoin-lite ]]; then mkdir -p $GOPATH/src/github.com/skycoin; ln -s $TRAVIS_BUILD_DIR $GOPATH/src/github.com/skycoin/skycoin-lite; fi
   - cd $GOPATH/src/github.com/skycoin/skycoin-lite
-  - go get -t ./...
+  - GOOS=js GOARCH=wasm go get -t ./...
   - go get -u github.com/FiloSottile/vendorcheck
   # Install pinned golangci-lint, overriding the latest version install by make install-linters
   - VERSION=1.17.1 ./ci-scripts/install-golangci-lint.sh
@@ -17,8 +17,8 @@ install:
 script:
   - cd $GOPATH/src/github.com/skycoin/skycoin-lite
   - make check
-  - make build-js-min
-  - make test-suite-ts
+  - make build-wasm
+  - make test-suite-ts-wasm
 
 notifications:
   email:

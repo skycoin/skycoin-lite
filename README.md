@@ -2,13 +2,14 @@
 
 # Skycoin Liteclient
 
-This repository contains a small wrapper for Skycoin (written in Go) to provide mobile and JS bindings.
+This repository contains a small wrapper for Skycoin (written in Go) to provide mobile, JS and wasm bindings.
 
 At the moment it is used to compile
 an [Android Archive](https://developer.android.com/studio/projects/android-library.html), an iOS Framework,
-and a JS library with [gopherjs](https://github.com/gopherjs/gopherjs).
+a (deprecated) JS library with [gopherjs](https://github.com/gopherjs/gopherjs) and a wasm file.
 
-Supports go1.10+.
+Supports go1.10+. However, for compiling the wasm file you must use Go v1.12.x (compatibility
+with Go v1.13+ is not guaranteed).
 
 ## Important note about error handling
 
@@ -31,15 +32,26 @@ $ gomobile bind -target=ios github.com/skycoin/skycoin-lite/mobile
 
 ## Compile javascript library
 
+> IMPORTANT: the ability for transpiling the code to a JavaScript library is deprecated due to important
+performance issues and should not be used. Please compile to a wasm file instead.
+
 For the compilation process to javascript library, we use [gopherjs](https://github.com/gopherjs/gopherjs).
 
 To compile the library use `make build-js` or `make build-js-min` (if you want the final file to be minified).
-After compiling, the main.js and main.js.map files will be created/updated in the root of the repository.
+After compiling, the `skycoin.js` and `skycoin.js.map` files will be created/updated in the `js` folder.
+
+## Compile wasm file
+
+> IMPORTANT: you need Go v1.12.x to use this function. It is not guaranteed to work with Go v1.13+.
+
+To compile the wasm file use `make build-wasm`. After compiling, the `skycoin-lite.wasm` file will be
+created/updated in the `js` folder.
 
 ## Development
 
-The javascript library is created starting from [gopher/main.go](gopher/main.go). The Android/iOS library is
-created starting from [mobile/api.go](mobile/api.go).
+The javascript library is created starting from [skycoin/skycoin.go](skycoin/skycoin.go). The wasm file is
+created starting from [wasm/skycoin.go](wasm/skycoin.go). The Android/iOS library is created starting
+from [mobile/api.go](mobile/api.go).
 
 ### Running tests
 
@@ -66,20 +78,35 @@ npm install --global source-map-support
 
 and make sure `NODE_PATH` is set to the value of `npm root --global` in your environment.
 
-#### TS cipher test suite
+#### TS cipher test suite for GopherJS
+
+> IMPORTANT: the ability for transpiling the code to a JavaScript library is deprecated due to important
+performance issues and should not be used. Please compile to a wasm file instead.
 
 The repository includes a TypeScript version of the cipher test suite, originally written in Go in
-the Skycoin main repository. Because the tests take a significant amount of time to complete in
-JavaScript/TypeScript, the test suite can be run with a limited number of cases with
+the Skycoin main repository. It test the GopherJS version of the library, so before
+using it you must compile the GopherJS version with `make build-js` or `make build-js-min`.
+Because testing the GopherJS version takes a significant amount of time to complete, the test suite
+can be run with a limited number of cases with:
 
 ```sh
 make test-suite-ts
 ```
 
-The test suite can be run with all test cases using
+The test suite can be run with all test cases using:
 
 ```sh
 make test-suite-ts-extensive
+```
+
+#### TS cipher test suite for wasm
+
+There is test suite for the wasm version of the library, just like there is one for the GopherJS
+version. Before using it you must compile the wasm version with `make build-wasm`. The test suite
+can be run with:
+
+```sh
+make test-suite-ts-wasm
 ```
 
 ### Formatting
