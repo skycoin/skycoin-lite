@@ -28,10 +28,12 @@ test-suite-ts-extensive: ## Run the ts version of the cipher test suite for Goph
 	cd js && npm run test-extensive
 
 test-suite-ts-wasm: ## Run the ts version of the cipher test suite for wasm and additional tests
+	cd vendor/github.com/skycoin/skycoin/src/cipher && GOOS=js GOARCH=wasm go test -c -o test.wasm
 	cd vendor/github.com/skycoin/skycoin/src/cipher/secp256k1-go && GOOS=js GOARCH=wasm go test -c -o test.wasm
 	cd vendor/github.com/skycoin/skycoin/src/cipher/secp256k1-go/secp256k1-go2 && GOOS=js GOARCH=wasm go test -c -o test.wasm
 	cd js && npm run test-wasm
 	cd js/tests && node cipher-wasm-internal.js
+	cd vendor/github.com/skycoin/skycoin/src/cipher && rm test.wasm
 	cd vendor/github.com/skycoin/skycoin/src/cipher/secp256k1-go && rm test.wasm
 	cd vendor/github.com/skycoin/skycoin/src/cipher/secp256k1-go/secp256k1-go2 && rm test.wasm
 
